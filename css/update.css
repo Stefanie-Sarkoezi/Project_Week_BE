@@ -1,0 +1,14 @@
+@import url(home.css);
+
+#upBtn {
+    background-color: #44c4bd;  
+}
+
+label {
+    font-weight:500;
+    font-size: larger;
+}
+
+#upLine {
+    margin-left: 35%;
+}
