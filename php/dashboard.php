@@ -93,7 +93,7 @@
     </div>
 
     <div class="container mb-5 mt-5">
-        <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1">
+        <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 gap-3">
             <?= $layout ?>
         </div>
     </div>
