@@ -1,6 +1,9 @@
 <?php
     session_start();
 
+$variable = "LukasLonauer";
+echo $variable;
+
     if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
         header("Location: login.php");
     }
