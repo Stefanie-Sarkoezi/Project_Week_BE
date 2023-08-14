@@ -1,4 +1,7 @@
 <?php
+
+    $variable = "Marvin"; echo $variable;
+
     require_once "db_connect.php";
     require_once "file_upload.php";
 
