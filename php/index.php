@@ -38,6 +38,8 @@
     }else {
         $layout .= "No Results";
     }
+    $variable = "STEFFI"; 
+    echo $variable; 
 ?>
 
 <!DOCTYPE html>
