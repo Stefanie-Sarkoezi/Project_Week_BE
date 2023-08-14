@@ -1,9 +1,6 @@
 <?php
     session_start();
 
-$variable = "LukasLonauer";
-echo $variable;
-
     if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
         header("Location: login.php");
     }
@@ -63,7 +60,9 @@ echo $variable;
                 <li class="nav-item  me-3"> 
                     <a class="nav-link" href="senior.php">Our Seniors</a>
                 </li>
-                
+                <li class="nav-item  me-3"> 
+                    <a class="nav-link" href="resourceLibrary.php">Resource Library</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php?logout">Logout</a >
                 </li>
@@ -86,9 +85,9 @@ echo $variable;
         <hr class="MLLine" style="width:20vw;">
     </div>
 
-    <div class="d-flex flex-row justify-content-center align-items-start">
-        <div><img src="../images/<?= $row["picture"] ?>" width="700vw"></div>
-        <div class="w-50">
+    <div class="d-flex flex-row gap-5 flex-wrap justify-content-start align-items-center p-5">
+        <div class="w-40"><img src="../images/<?= $row["picture"] ?>" width="80%"></div>
+        <div class="w-40 ps-0">
             <div class="mb-3"><b id="txSize">Name:</b> <br> <?= $row["name"] ?></div>
             <div class="mb-3"><b id="txSize">Address:</b> <br><?= $row["address"]?></div>
             <div class="mb-3"><b id="txSize">Age:</b> <br><?= $row["age"]?></div>

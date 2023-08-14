@@ -83,7 +83,9 @@
                 <li class="nav-item  me-3"> 
                     <a class="nav-link" href="senior.php">Our Seniors</a>
                 </li>
-                
+                <li class="nav-item  me-3"> 
+                    <a class="nav-link" href="resourceLibrary.php">Resource Library</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php?logout">Logout</a >
                 </li>
@@ -107,7 +109,7 @@
     </div>
 
     <div class="container">
-        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1 gap-4">
             <?= $layout ?>
         </div>
     </div>
