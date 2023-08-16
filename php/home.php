@@ -23,7 +23,7 @@
 
     $layout = "";
     
-
+    // -------------------PET OF THE WEEK--------------------------
     $sqlPow = "SELECT * FROM pet_of_week WHERE id = 1";
     $resultPow = mysqli_query($connect, $sqlPow);
     $rowNice = mysqli_fetch_assoc($resultPow);
@@ -31,9 +31,13 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $nicePet = "
-    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 30%;'>
-    <b>{$rowAnimal["name"]}</b>
-    <p>{$rowNice["description"]}";
+    <div class='text-center d-flex flex-row gap-5 flex-wrap justify-content-start align-items-center m-4' style='width: 50vw;'>
+        <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
+        <div>
+            <b>{$rowAnimal["name"]}</b>
+            <p>{$rowNice["description"]}  
+        </div> 
+    </div>";
 
     $sqlPow = "SELECT * FROM pet_of_week WHERE id = 2";
     $resultPow = mysqli_query($connect, $sqlPow);
@@ -45,6 +49,7 @@
     <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 30%;'>
     <b>{$rowAnimal["name"]}</b>
     <p>{$rowNice["description"]}";
+    // ------------------------PET OF THE WEEK END-------------------------------------
 
     if(mysqli_num_rows($resultAnimals) > 0){
         while($rowAnimal = mysqli_fetch_assoc($resultAnimals)){
@@ -131,12 +136,12 @@
     <div class="container">
         <div class="petOfTheWeek">
             <hr>
-            <div class="nicePet">
+            <div class="nicePet text-center bg-light p-4">
                 <h2>NICE PET OF THE WEEK</h2>
                 <?=$nicePet?>
             </div>
             <hr>
-            <div class="naughtyPet">
+            <div class="naughtyPet text-center bg-light p-4">
                 <h2>NAUGHTY PET OF THE WEEK</h2>
                 <?= $naughtyPet?>
             </div>
