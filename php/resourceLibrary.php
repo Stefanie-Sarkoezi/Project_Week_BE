@@ -77,7 +77,7 @@
                             <h3 class="flaticon-house display-3 font-weight-normal text-secondary mb-3"></h3>
                             <h3 class="mb-3">The emergency checklist all pet parents need</h3>
                             <!-- <p>Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo</p> -->
-                            <a class="text-uppercase font-weight-bold mt-auto" href="">Read More</a>
+                            <a class="text-uppercase font-weight-bold mt-auto" href="emergencyChecklist.php">Read More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 mb-4">
