@@ -117,6 +117,7 @@
                 </div>
                 <button name="update" type="submit" class="btn text-white mb-5" id="upBtn" >Update profile</button>
                 <a href="<?= $backBtn ?>" class="btn btn-secondary mb-5">Back</a>
+                <a href='user_delete.php?x=<?= $id ?>' class='btn btn-danger mb-5'>Delete</a>
             </form>
         </div>
 
