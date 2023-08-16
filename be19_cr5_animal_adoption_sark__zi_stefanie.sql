@@ -64,30 +64,37 @@ INSERT INTO `animals` (`id`, `name`, `picture`, `address`, `description`, `size`
 -- Tabellenstruktur für Tabelle `pet_adoptions`
 --
 
+-- Table structure for table `pet_adoptions`
+--
+
 CREATE TABLE `pet_adoptions` (
   `id` int(11) NOT NULL,
-  `adopt_date` date NOT NULL,
+  `adopt_date` date DEFAULT NULL,
   `user_id_fk` int(11) NOT NULL,
-  `animal_id_fk` int(11) NOT NULL
+  `animal_id_fk` int(11) NOT NULL,
+  `request_date` date NOT NULL,
+  `living_condition` varchar(2000) NOT NULL,
+  `previous_experience` varchar(2000) NOT NULL,
+  `adoption_reason` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Daten für Tabelle `pet_adoptions`
 --
 
-INSERT INTO `pet_adoptions` (`id`, `adopt_date`, `user_id_fk`, `animal_id_fk`) VALUES
-(1, '2023-07-29', 2, 2),
-(2, '2023-07-29', 2, 2),
-(3, '2023-07-29', 2, 2),
-(4, '2023-07-29', 2, 2),
-(5, '2023-07-29', 2, 2),
-(6, '2023-07-29', 2, 4),
-(7, '2023-07-29', 2, 3),
-(8, '2023-07-29', 2, 3),
-(9, '2023-07-29', 2, 4),
-(10, '2023-07-29', 2, 2),
-(11, '2023-07-29', 2, 1),
-(12, '2023-07-29', 2, 10);
+INSERT INTO `pet_adoptions` (`id`, `adopt_date`, `user_id_fk`, `animal_id_fk`, `request_date`, `living_condition`, `previous_experience`, `adoption_reason`) VALUES
+(1, '2023-07-29', 2, 2, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(2, '2023-07-29', 2, 2, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(3, '2023-07-29', 2, 2, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(4, '2023-07-29', 2, 2, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(5, '2023-07-29', 2, 2, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(6, '0000-00-00', 2, 5, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(7, '2023-07-29', 2, 3, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(8, '2023-07-29', 2, 3, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(9, '0000-00-00', 2, 4, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(10, '2023-07-29', 2, 2, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(11, '2023-07-29', 2, 1, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text'),
+(12, '2023-07-29', 2, 10, '2023-07-29', 'dummy living condition text', 'dummy previous expeirence text', 'dummy reason text');
 
 -- --------------------------------------------------------
 
