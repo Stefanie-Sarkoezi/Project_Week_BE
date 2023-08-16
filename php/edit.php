@@ -86,6 +86,9 @@
                 <li class="nav-item  me-3"> 
                     <a class="nav-link" href="create.php">Create</a>
                 </li>
+                <li class="nav-item  me-3"> 
+                    <a class="nav-link" href="resourceLibrary.php">Resource Library</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php?logout">Logout</a >
                 </li>
