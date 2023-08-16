@@ -111,7 +111,7 @@ CREATE TABLE `users` (
   `phone` int(15) NOT NULL,
   `email` varchar(50) NOT NULL,
   `picture` varchar(100) DEFAULT NULL,
-  `status` varchar(4) NOT NULL DEFAULT 'user'
+  `status` varchar(10) NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
