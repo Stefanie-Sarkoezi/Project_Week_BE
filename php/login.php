@@ -11,6 +11,10 @@
         header("Location: home.php");
     }
 
+    if ((isset($_SESSION["shelter"]))  || (isset($_SESSION["agency"])) ){
+        header("Location: agency.php");
+    }
+
     $email = $passError = $emailError = "";
     $error = false;
 
@@ -47,6 +51,12 @@
                 if($row["status"] == "user"){
                     $_SESSION["user"] = $row["id"];
                     header("Location: home.php");
+                } else if($row["status"] == "shelter"){
+                    $_SESSION["shelter"] = $row["id"];
+                    header("Location: agency.php");
+                } else if($row["status"] == "agency"){
+                    $_SESSION["agency"] = $row["id"];
+                    header("Location: agency.php");
                 }else {
                     $_SESSION["adm"] = $row["id"];
                     header("Location: dashboard.php");
