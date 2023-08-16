@@ -20,16 +20,10 @@
     $rowAnimals = mysqli_fetch_assoc($resultAnimals);
     
     $nicePetOptions = "";
-    if(mysqli_num_rows($resultAnimals) > 0){
-        while($row = mysqli_fetch_assoc($resultAnimals)){
-            $nicePetOptions .= "<option value='{$row["id"]}' selected>{$row["name"]}</option>";
-        }
-    }else {
-        $layout .= "No Results";
-    }
     $naughtyPetOptions = "";
     if(mysqli_num_rows($resultAnimals) > 0){
         while($row = mysqli_fetch_assoc($resultAnimals)){
+            $nicePetOptions .= "<option value='{$row["id"]}' selected>{$row["name"]}</option>";
             $naughtyPetOptions .= "<option value='{$row["id"]}' selected>{$row["name"]}</option>";
         }
     }else {
@@ -44,10 +38,16 @@
         $naughtyPetDescription = $_POST["naughtyPetDescription"];
 
         $sql = "UPDATE `pet_of_week` SET `animal_id` = '$nicePet', `description` = '$nicePetDescription' WHERE id = 1";
-        $sql = "UPDATE `pet_of_week` SET `animal_id` = '$naughtyPet', `description` = '$naughtyPetDescription' WHERE id = 2";
+        $sqlNaughty = "UPDATE `pet_of_week` SET `animal_id` = '$naughtyPet', `description` = '$naughtyPetDescription' WHERE id = 2";
 
         if(mysqli_query($connect, $sql)){
-            header("refresh: 3; url = manage.php");
+            if(mysqli_query($connect, $sqlNaughty)){
+            header("refresh: 10; url = manage.php");
+            }else {
+            echo "<div class='alert alert-danger' role='alert'>
+                Oops! Something went wrong.
+                </div>";
+            }
         }else {
             echo "<div class='alert alert-danger' role='alert'>
                 Oops! Something went wrong.
