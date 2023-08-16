@@ -142,7 +142,7 @@
             </div>
             <hr>
         </div>
-        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
+        <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
             <?= $layout ?>
         </div>
     </div>
