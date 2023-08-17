@@ -24,7 +24,6 @@
     $row = mysqli_fetch_assoc($result);
 
     $status = $row["status"];
-    echo $status;
     if($status == 0){ 
         $message = "Adopted";
         $colorClass = "red-text";
