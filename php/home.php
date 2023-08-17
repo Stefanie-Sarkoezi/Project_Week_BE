@@ -54,7 +54,7 @@
     if(mysqli_num_rows($resultAnimals) > 0){
         while($rowAnimal = mysqli_fetch_assoc($resultAnimals)){
             $adoptBtn = "";
-            if($rowAnimal["status"] == 0){
+            if($rowAnimal["status"] == 0 || $rowAnimal["status"] == 2){
                 $adoptBtn = "<button href='adopt.php?x={$rowAnimal["id"]}' class='btn text-white' disabled id='upBtn'>Take me home</button>";
             } else {
                 $adoptBtn = "<button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='adopt.php?x={$rowAnimal["id"]}'>Take me home </a> </button>";

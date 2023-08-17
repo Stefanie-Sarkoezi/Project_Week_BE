@@ -24,12 +24,16 @@
     $row = mysqli_fetch_assoc($result);
 
     $status = $row["status"];
-    if($status > 0){ 
-        $message = "Available";
-        $colorClass = "green-text";
-    }else {
+    echo $status;
+    if($status == 0){ 
         $message = "Adopted";
         $colorClass = "red-text";
+    }else if($status == 2){ 
+        $message = "Requested";
+        $colorClass = "red-text";
+    } else {
+        $message = "Available";
+        $colorClass = "green-text";
     }
 
 
