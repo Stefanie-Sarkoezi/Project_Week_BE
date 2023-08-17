@@ -47,6 +47,70 @@
     }else {
         $layout.= "No results found!";
     }
+    // Get Options to select from for Breeds
+    $speciesOptions = "";
+    $checkerArray = [];
+    $sqlBreed = "SELECT * FROM `animals`";
+    $resultBreed = mysqli_query($connect, $sqlBreed);
+    if(mysqli_num_rows($resultBreed) > 0){
+        while($rowBreed = mysqli_fetch_assoc($resultBreed)){
+            if (in_array($rowBreed["breed"], $checkerArray, TRUE)) {
+                array_push($checkerArray, $rowBreed["breed"]);
+            } else {
+                array_push($checkerArray, $rowBreed["breed"]);
+                $speciesOptions .= 
+                "<option value='{$rowBreed["breed"]}'>{$rowBreed["breed"]}</option>";
+            }
+        }
+    }
+    // Find by Age
+    if(isset($_POST["age-press"])){
+        $age = ($_POST["age"]);
+        $operator = ($_POST["operator"]);
+    
+        header("Location: petage.php?age={$age}&&operator={$operator}");
+    }
+    
+    // Find by Location (PLZ)
+    if(isset($_POST["location-press"])){
+        $location = ($_POST["location$location"]);
+    
+        header("Location: petlocation.php?location={$location}");
+    }
+    
+    // Find by Species
+    if(isset($_POST["species-press"])){
+        $species = ($_POST["species"]);
+    
+        header("Location: petspecies.php?species={$species}");
+    }
+    // -------------------PET OF THE WEEK--------------------------
+    $sqlPow = "SELECT * FROM pet_of_week WHERE id = 1";
+    $resultPow = mysqli_query($connect, $sqlPow);
+    $rowNice = mysqli_fetch_assoc($resultPow);
+    $sqlAnimal = "SELECT * FROM animals WHERE id = {$rowNice["animal_id"]}";
+    $resultAnimal = mysqli_query($connect, $sqlAnimal);
+    $rowAnimal = mysqli_fetch_assoc($resultAnimal);
+    $nicePet = "
+    <div class='text-center d-flex flex-row gap-5 flex-wrap justify-content-start align-items-center m-4' style='width: 50vw;'>
+        <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
+        <div>
+            <b>{$rowAnimal["name"]}</b>
+            <p>{$rowNice["description"]}  
+        </div> 
+    </div>";
+
+    $sqlPow = "SELECT * FROM pet_of_week WHERE id = 2";
+    $resultPow = mysqli_query($connect, $sqlPow);
+    $rowNice = mysqli_fetch_assoc($resultPow);
+    $sqlAnimal = "SELECT * FROM animals WHERE id = {$rowNice["animal_id"]}";
+    $resultAnimal = mysqli_query($connect, $sqlAnimal);
+    $rowAnimal = mysqli_fetch_assoc($resultAnimal);
+    $naughtyPet = "
+    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 30%;'>
+    <b>{$rowAnimal["name"]}</b>
+    <p>{$rowNice["description"]}";
+    // ------------------------PET OF THE WEEK END-------------------------------------
 
 ?>
 
@@ -107,6 +171,82 @@
     </div>
 
     <div class="container">
+        <div class="petOfTheWeek">
+            <hr>
+            <div class="nicePet text-center bg-light p-4">
+                <h2>NICE PET OF THE WEEK</h2>
+                <?=$nicePet?>
+            </div>
+            <hr>
+            <div class="naughtyPet text-center bg-light p-4">
+                <h2>NAUGHTY PET OF THE WEEK</h2>
+                <?= $naughtyPet?>
+            </div>
+            <hr>
+        </div>
+        <a class="btn btn-dark" type="button" href="create_potw.php">Pet of the Week</a>
+        <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Filter</button>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header myFilter">
+                <h5 class="offcanvas-title text-light" id="offcanvasScrollingLabel">Filter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body myFilter">
+                <hr>
+                <!-- Form to find by Age -->
+                <form method="post" enctype="multipart/form-data">
+                    <label for="age" class="text-light">Age: </label>
+                    <input type="text" class="form-control mt-2" name="age"><br>
+                        <label for="operator" class="text-light">Operator: </label>
+                        <select id="operator" class="form-select mt-2" name="operator">
+                            <option value="=">Equals</option>
+                            <option value=">">MoreThan</option>
+                            <option value="<">LessThan</option>
+                        </select>
+                    <button name="age-press" class="btn btn-secondary mt-3" type="submit">FindByAge</button>
+                </form>
+                <hr>
+                <!-- Form to find by Location (PLZ) -->
+                <form method="post" enctype="multipart/form-data">
+                    <label for="location" class="text-light">District: </label>
+                    <select id="location" class="form-select mt-2" name="location">
+                        <option value="1010">1010 Innere Stadt</option>
+                        <option value="1020">1020 Leopoldstadt</option>
+                        <option value="1030">1030 Landstraße</option>
+                        <option value="1040">1040 Wieden</option>
+                        <option value="1050">1050 Margareten</option>
+                        <option value="1060">1060 Mariahilf</option>
+                        <option value="1070">1070 Neubau</option>
+                        <option value="1080">1080 Josefstadt</option>
+                        <option value="1090">1090 Alsergrund</option>
+                        <option value="1100">1100 Favoriten</option>
+                        <option value="1110">1110 Simmering</option>
+                        <option value="1120">1120 Meidling</option>
+                        <option value="1130">1130 Hietzing</option>
+                        <option value="1140">1140 Penzing</option>
+                        <option value="1150">1150 Rudolfsheim-Fünfhaus</option>
+                        <option value="1160">1160 Ottakring</option>
+                        <option value="1170">1170 Hernals</option>
+                        <option value="1180">1180 Währing</option>
+                        <option value="1190">1190 Döbling</option>
+                        <option value="1200">1200 Brigittenau</option>
+                        <option value="1210">1210 Floridsdorf</option>
+                        <option value="1220">1220 Donaustadt</option>
+                        <option value="1230">1230 Liesing</option>
+                    </select>
+                    <button name="location-press" class="btn btn-secondary mt-3" type="submit">FindByLocation</button>
+                </form>
+                <hr>
+                <!-- Form to find by Species -->
+                <form method="post" enctype="multipart/form-data">
+                    <label for="species" class="text-light">Species: </label>
+                    <select id="species" class="form-select mt-2" name="species">
+                        <?= $speciesOptions ?>
+                    </select>
+                    <button name="species-press" class="btn btn-secondary mt-3" type="submit">FindBySpecies</button>
+                </form>
+            </div>
+        </div>
         <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
             <?= $layout ?>
         </div>

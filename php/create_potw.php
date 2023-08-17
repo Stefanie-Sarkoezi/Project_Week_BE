@@ -11,7 +11,7 @@
         header("Location: login.php");
     }
 
-    $sqlUsers = "SELECT * FROM users";
+    $sqlUsers = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
     $resultUsers = mysqli_query($connect, $sqlUsers);
     $rowUser = mysqli_fetch_assoc($resultUsers);
 

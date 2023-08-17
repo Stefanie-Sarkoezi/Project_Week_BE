@@ -81,9 +81,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="logout.php?logout">Logout</a >
                 </li>
-                <li class="nav-item  me-3"> 
-                    <a class="nav-link" href="create_potw.php">Pet of the Week</a>
-                </li>
             </ul>
             <a class="navbar-brand" href="update.php?id=<?=$row["id"]?>">
               <span class="text-black-50 fs-6"><?= $row["email"] ?></span>

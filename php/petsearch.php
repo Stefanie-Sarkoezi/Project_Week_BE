@@ -56,24 +56,18 @@ if(isset($_POST["species-press"])){
 
 <!-- Form to find by Age -->
 <form method="post" enctype="multipart/form-data">
-
     <label for="age">Age: </label>
     <input type="text" name="age"><br>
-
     <label for="operator">Operator: </label>
     <select id="operator" name="operator">
         <option value="=">Equals</option>
         <option value=">">MoreThan</option>
         <option value="<">LessThan</option>
     </select>
-
     <button name="age-press" type="submit">FindByAge</button>
-
 </form>
-
 <!-- Form to find by Location (PLZ) -->
 <form method="post" enctype="multipart/form-data">
-
     <label for="location">District: </label>
     <select id="location" name="location">
         <option value="1010">1010 Innere Stadt</option>
@@ -99,24 +93,16 @@ if(isset($_POST["species-press"])){
         <option value="1210">1210 Floridsdorf</option>
         <option value="1220">1220 Donaustadt</option>
         <option value="1230">1230 Liesing</option>
-        
     </select>
-
     <button name="location-press" type="submit">FindByLocation</button>
-
 </form>
-
 <!-- Form to find by Species -->
 <form method="post" enctype="multipart/form-data">
-
     <label for="species">species: </label>
     <select id="species" name="species">
         <?= $speciesOptions ?>
     </select>
-
-
     <button name="species-press" type="submit">FindBySpecies</button>
-
 </form>
 
 

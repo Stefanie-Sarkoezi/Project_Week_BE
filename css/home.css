@@ -63,7 +63,9 @@ body{
 .TitleHR {
     color: #44c4bd; 
 }
-
+.myFilter{
+    background-color: #b8b7b7;
+}
 #foBg {
     background-color: gainsboro;
     opacity: 70%;
