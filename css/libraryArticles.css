@@ -1,0 +1,21 @@
+@import url(home.css);
+
+.MLLine {
+    margin-left: 0%;
+    color: #44c4bd;
+    opacity: 100%;
+}
+b {
+    font-family: "snicker", sans-serif;
+    font-weight: 700;
+    font-style: normal; 
+    font-size: 2rem;
+    color: #44c4bd;
+    margin-right: 3%;
+}
+h5 {
+    font-size: 1rem;
+    font-family: "snicker", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
