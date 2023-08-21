@@ -12,9 +12,15 @@ $sqlX = "SELECT * FROM `animals`";
 $result = mysqli_query($connect, $sqlX);
 if(mysqli_num_rows($result) > 0){
     while($row = mysqli_fetch_assoc($result)){
+        // If an animal species from $row["breed"] already exists in the array, don't print
+        // an extra option, then push it into the array
         if (in_array($row["breed"], $checkerArray, TRUE)) {
             array_push($checkerArray, $row["breed"]);
-        } else {
+        } 
+        // If an animal species from $row["breed" doesn't exist in the array yet, print an 
+        // extra option line. Then push it into the array. This way you avoid duplicates like
+        // printing an "Option dog" for every single dog in the table
+        else {
             array_push($checkerArray, $row["breed"]);
             $speciesOptions .= 
             "<option value='{$row["breed"]}'>{$row["breed"]}</option>";
