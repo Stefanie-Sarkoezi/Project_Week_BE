@@ -78,14 +78,28 @@ body{
     color: #44c4bd;
     opacity: 100%;
 }
-
+.potwImg{
+    padding: 0px;
+    margin: 0px;
+    width: 50%;
+}
+.npotw{
+    padding: 0px;
+    margin: 0px;
+}
 #upLine {
     margin-left: 35%;
 }
 #upBtn {
     background-color: #44c4bd;  
 }
-
+@media only screen and (max-width: 1200px) {
+    .potwImg{
+        padding: 0px;
+        margin: 0px;
+        width: 50%;
+    }
+}
 
 
 

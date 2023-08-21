@@ -22,7 +22,12 @@
         unset($_SESSION["adm"]);
         session_unset();
         session_destroy();
-        header("Location: login.php");
+        if(!isset($_SESSION["user"])){
+            header("Location: dashboard.php");
+        }
+        else{
+            header("Location: logout.php");
+        }
     }else {
         echo "Oops! Something went wrong!";
     }

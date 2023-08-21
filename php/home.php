@@ -31,13 +31,17 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $nicePet = "
-    <div class='text-center d-flex flex-row gap-5 flex-wrap justify-content-start align-items-center m-4' style='width: 50vw;'>
-        <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
-        <div>
-            <b>{$rowAnimal["name"]}</b>
-            <p>{$rowNice["description"]}  
-        </div> 
-    </div>";
+        <div class='npotw text-center d-flex flex-row flex-wrap justify-content-start align-items-center'>
+            <div class='row row-cols-xl-2 row-cols-md-1'>
+                <div class='potwImg'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
+                </div>
+                <div class='potwImg'>
+                    <b>{$rowAnimal["name"]}</b>
+                    <p>{$rowNice["description"]}  
+                </div> 
+            </div>
+        </div>";
 
     $sqlPow = "SELECT * FROM pet_of_week WHERE id = 2";
     $resultPow = mysqli_query($connect, $sqlPow);
@@ -46,9 +50,17 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $naughtyPet = "
-    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 30%;'>
-    <b>{$rowAnimal["name"]}</b>
-    <p>{$rowNice["description"]}";
+        <div class='npotw text-center d-flex flex-row flex-wrap justify-content-start align-items-center'>
+            <div class='row row-cols-xl-2 row-cols-md-1'>
+                <div class='potwImg'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
+                </div>
+                <div class='potwImg'>
+                    <b>{$rowAnimal["name"]}</b>
+                    <p>{$rowNice["description"]}  
+                </div> 
+            </div>
+        </div>";
     // ------------------------PET OF THE WEEK END-------------------------------------
 
     if(mysqli_num_rows($resultAnimals) > 0){
@@ -125,8 +137,8 @@
     <meta charset="UTF-8">
     <meta  name="viewport"  content="width=device-width, initial-scale=1.0" >
    <title>Welcome <?= $row["first_name"] ?></title>
-   <link rel="Stylesheet" href="../css/home.css">
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"  rel= "stylesheet" integrity ="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"  crossorigin= "anonymous">
+   <link rel="Stylesheet" href="../css/home.css">
 
 </head>
 <body>
@@ -171,19 +183,18 @@
     </div>
 
     <div class="container">
-        <div class="petOfTheWeek">
-            <hr>
-            <div class="nicePet text-center bg-light p-4">
-                <h2>NICE PET OF THE WEEK</h2>
+        <hr>
+        <div class="petOfTheWeek row row-cols-xl-2 row-cols-md-1">
+            <div class="npotw nicePet text-center bg-light p-4">
+                <h2 class="npotw">NICE PET OF THE WEEK</h2>
                 <?=$nicePet?>
             </div>
-            <hr>
             <div class="naughtyPet text-center bg-light p-4">
-                <h2>NAUGHTY PET OF THE WEEK</h2>
-                <?= $naughtyPet?>
+                <h2 class="npotw">NAUGHTY PET OF THE WEEK</h2>
+                <?=$naughtyPet?>
             </div>
-            <hr>
         </div>
+        <hr>
         <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Filter</button>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header myFilter">
