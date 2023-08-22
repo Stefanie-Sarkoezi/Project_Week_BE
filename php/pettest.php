@@ -66,6 +66,7 @@ if(isset($_POST["join-press"])){
 
     if ($sql == "SELECT * FROM animals WHERE ") {
         echo "DO SOMETHING";
+        $sql = "SELECT * FROM animals";
     }
     
     $result = mysqli_query($connect, $sql);
