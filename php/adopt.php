@@ -24,51 +24,58 @@
 
     $livingcondition = $previousexperience = $adoptionreason = "";
     $livingconditionError = $previousexperienceError = $adoptionreasonError = "";
+    
+    function cleanInput($param){
+        $data = trim($param);
+        $data = strip_tags($data);
+        $data = htmlspecialchars($data);
+
+        return $data;
+    }
 
     if(isset($_POST["createrequest"])){
-        $livingcondition = $_POST["livingcondition"];
-        $previousexperience = $_POST["previousexperience"];
-        $adoptionreason = $_POST["adoptionreason"];
+        $livingcondition = cleanInput($_POST["livingcondition"]);
+        $previousexperience = cleanInput($_POST["previousexperience"]);
+        $adoptionreason = cleanInput($_POST["adoptionreason"]);
 
         if(empty($livingcondition)){
             $error = true;
-            $livingconditionError = "Please enter your livingcondition.";
+            $livingconditionError = "Please enter your living condition.";
         }elseif(strlen($livingcondition) < 10){
             $error = true;
-            $livingconditionError = "Please enter a valid livingcondition.";
+            $livingconditionError = "Please enter a valid living condition.";
         }
         if(empty($previousexperience)){
             $error = true;
-            $previousexperienceError = "Please enter your previousexperience.";
+            $previousexperienceError = "Please enter your previous experience.";
         }elseif(strlen($previousexperience) < 10){
             $error = true;
-            $previousexperienceError = "Please enter a valid previousexperience.";
+            $previousexperienceError = "Please enter a valid previous experience.";
         }
         if(empty($adoptionreason)){
             $error = true;
-            $adoptionreasonError = "Please enter your adoptionreason.";
+            $adoptionreasonError = "Please enter your adoption reason.";
         }elseif(strlen($adoptionreason) < 10){
             $error = true;
-            $adoptionreasonError = "Please enter a valid adoptionreason.";
+            $adoptionreasonError = "Please enter a valid adoption reason.";
         }
         if(!$error){
             $sqlAnimal = "SELECT * FROM animals WHERE id = $id";
             $resultAnimal = mysqli_query($connect, $sqlAnimal);
             $rowAnimal = mysqli_fetch_assoc($resultAnimal);
          
-            $request_date = date('Y-m-d');
+            $shelterID = $rowAnimal["agency_id_fk"];
+            $request_date = date('Y-m-d H:i:s');
             $user_id_fk = $rowUser["id"];
             $animal_id_fk = $rowAnimal["id"];
-            $sqlAdoptionRequest = "INSERT INTO `pet_adoptions`(`request_date`, `user_id_fk`, `animal_id_fk`, `living_condition`, `previous_experience`, `adoption_reason`) 
-                                    VALUES ('$request_date','$user_id_fk', '$animal_id_fk', '$livingcondition', '$previousexperience', '$adoptionreason')";
-    
-            $sqlAnimalUpdate = "UPDATE `animals` SET `status` = '2' WHERE id = $animal_id_fk";
+            $sqlAdoptionRequest = "INSERT INTO `pet_adoptions`(`request_date`, `user_id_fk`, `animal_id_fk`, `living_condition`, `previous_experience`, `adoption_reason`, `shelter_id`) 
+                                    VALUES ('$request_date','$user_id_fk', '$animal_id_fk', '$livingcondition', '$previousexperience', '$adoptionreason', '$shelterID')";
          
-            if(mysqli_query($connect, $sqlAdoptionRequest) && mysqli_query($connect, $sqlAnimalUpdate) ){
+            if(mysqli_query($connect, $sqlAdoptionRequest)){
                 echo "<div class='alert alert-success' role='alert'>
-                Yay! Your adoption request is sent successfully {$rowAnimal['name']}! 
+                Yay! Your adoption request was sent successfully {$rowAnimal['name']}! 
                     </div>";
-                    header("refresh: 3; url = home.php");
+                    header("refresh: 1; url = home.php");
             }else {
                 echo "<div class='alert alert-danger' role='alert'>
                     Oops! Something went wrong. {$picture[1]}

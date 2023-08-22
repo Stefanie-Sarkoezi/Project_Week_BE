@@ -113,11 +113,20 @@
             </div>
             <div class="mb-4">
                 <label for="vaccinated" class="form-label">Vaccinated:</label>
-                <input type="text" class="form-control"  id="vaccinated"  aria-describedby="vaccinated"  name="vaccinated">
+                <select class="form-select form-select mb-3" aria-label="vaccinated" name="vaccinated" id="vaccinated" >
+                    <option selected value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select> 
             </div>
             <div class="mb-4">
                 <label for="breed" class="form-label">Breed:</label>
-                <input type="text" class="form-control"  id="breed"  aria-describedby="breed"  name="breed">
+                <select class="form-select form-select mb-3" aria-label="breed" name="breed" id="breed" >
+                    <option selected value="Cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Leopard Gecko">Leopard Gecko</option>
+                    <option value="Bunny">Bunny</option>
+                    <option value="Jumping Spider">Jumping Spider</option>
+                </select> 
             </div>
             <?= $agencyForm ?>
             <?= $agencyOptions ?>

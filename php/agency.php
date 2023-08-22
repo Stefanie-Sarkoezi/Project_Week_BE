@@ -1,17 +1,13 @@
 <?php
-
-    session_start();
+    require_once "footer.php";
+    require_once "navbar.php";
 
     if(isset($_SESSION["adm"])){
         header("Location: dashboard.php");
     }
 
-    if(isset($_SESSION["user"])){
+    if(!isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
         header("Location: home.php");
-    }
-
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])  && !isset($_SESSION["shelter"]) && !isset($_SESSION["agency"])){
-        header("Location: login.php");
     }
 
     require_once "db_connect.php";
@@ -19,9 +15,6 @@
     $agencyId= "";
     if(isset($_SESSION["shelter"])){
         $agencyId = $_SESSION["shelter"];
-    }
-    if(isset($_SESSION["agency"])){
-        $agencyId = $_SESSION["agency"];
     }
 
     $sql = "SELECT * FROM users WHERE id = {$agencyId}";
@@ -32,11 +25,13 @@
     $sqlAnimals = "SELECT * FROM animals  WHERE agency_id_fk = {$agencyId} ";
 
     // assumption: 1-available, 2-requested, 0-adopted
-    If (isset($_GET['status'])){
-        If ($_GET['status'] == 'adopted'){
+    if (isset($_GET['status'])){
+        if ($_GET['status'] == 'adopted'){
             $sqlAnimals .= " AND status = 0";
-        } else If ($_GET['status'] == 'requested'){
+        } elseif ($_GET['status'] == 'requested'){
             $sqlAnimals .= " AND status = 2";
+        } elseif ($_GET['status'] == 'available'){
+            $sqlAnimals .= " AND status = 1";
         }
     }
 
@@ -95,37 +90,7 @@
 
 
 <body>
-   <nav class="navbar navbar-expand-lg bg-body-tertiary" >
-        <div class="container-fluid">
-            <a class="navbar-brand" href="home.php">
-                <img src="../images/logo.png" alt="logo" style="width: 5vw;">
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 navText" >
-                <li class="nav-item ms-2 me-3">
-                    <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-                </li>
-                <li class="nav-item  me-3"> 
-                    <a class="nav-link" href="agency.php">All animals</a>
-                </li>
-                <li class="nav-item  me-3"> 
-                    <a class="nav-link" href="agency.php?status=adopted">Adopted animals</a>
-                </li>
-                <li class="nav-item  me-3"> 
-                    <a class="nav-link" href="agency.php?status=requested">Requested animals</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php?logout">Logout</a >
-                </li>
-            </ul>
-            <a class="navbar-brand" href="update.php?id=<?=$row["id"]?>">
-              <span class="text-black-50 fs-6"><?= $row["email"] ?></span>
-            </a>
-            <a class="navbar-brand" href="update.php?id=<?=$row["id"]?>">
-                <img src="../images/<?= $row["picture"] ?>" class="object-fit-contain" alt="user pic" width="70" height="70">
-            </a>
-        </div>
-    </nav>
+   <?= $nav ?>
 
     <div class="headerImage mb-5">
         <p id="hero">PAWFECT <br> - MATCH -</p>
@@ -137,30 +102,15 @@
     </div>
 
     <div class="container">
+        <a class="btn btn-dark" href="agency.php?status=adopted">Adopted animals</a>
+        <a class="btn btn-dark" href="agency.php?status=available">Available animals</a>
+        <a class="btn btn-dark" href="agency.php">All animals</a>
         <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
             <?= $layout ?>
         </div>
     </div>
     
-
-    <footer class="mt-5">
-        <div class="card text-center" id="foBg">
-            <div class="card-header p-3">
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/Facebook.png" width="40%" class="m-1"></a>
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/twitter.png" width="90%" class="m-1"></a>
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/instagram.png" width="75%"  class="m-1"></a>
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/google.png" width="75%"  class="m-1"></a>
-            </div>
-            <span class="card-body input-group input-group-sm  mx-auto p-3" style="width: 40%;" >
-                <span class="input-group-text bg-black border-black text-white">Sign up for our newsletter</span>
-                <input type="text" name="email" autocomplete="email" class="form-control bg-black border-black" placeholder="example@gmail.com">
-                <button class=" btn rounded-end bg-black text-white" type="button" id="button-addon1"> Subscripe</button>
-            </span>
-            <div class="card-footer text-body-secondary p-1">
-                &copy; Stefanie Sarközi
-            </div>
-        </div>
-    </footer>
+    <?= $footer ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>

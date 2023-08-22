@@ -4,7 +4,7 @@
 
     require_once "db_connect.php";
     $name = "";
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
         $name = "guest";
     }
     else{

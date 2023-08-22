@@ -106,6 +106,12 @@ body{
     padding: 0px;
     margin: 0px;
 }
+/*My Reguest*/
+.myRequest{
+    border-radius: 1rem;
+    font-size: larger;
+}
+
 @media only screen and (max-width: 1200px) {
     .potwImg{
         padding: 0px;

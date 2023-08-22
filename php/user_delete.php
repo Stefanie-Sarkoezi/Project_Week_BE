@@ -3,9 +3,21 @@
 
     session_start();
 
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
         header("Location: register.php");
     }
+    if(isset($_SESSION["adm"])){
+        $sqlAcc = "SELECT * FROM users WHERE id = {$_SESSION['adm']}";
+    }
+    if(isset($_SESSION["user"])){
+        $sqlAcc = "SELECT * FROM users WHERE id = {$_SESSION['user']}";
+    }
+    if(isset($_SESSION["shelter"])){
+        $sqlAcc = "SELECT * FROM users WHERE id = {$_SESSION['shelter']}";
+    }
+    $resultAcc = mysqli_query($connect, $sqlAcc);
+    $rowAcc = mysqli_fetch_assoc($resultAcc);
+    $AccID = $rowAcc["id"];
 
     $id = $_GET["x"];
 
@@ -18,15 +30,26 @@
 
     $delete = "DELETE FROM `users` WHERE id = $id";
     if(mysqli_query($connect, $delete)){
-        unset($_SESSION["user"]);
-        unset($_SESSION["adm"]);
-        session_unset();
-        session_destroy();
-        if(!isset($_SESSION["user"])){
-            header("Location: dashboard.php");
+        if(isset($_SESSION["adm"])){
+            if($id != $AccID){
+                header("Location: dashboard.php");
+            }
+            else{
+                unset($_SESSION["user"]);
+                unset($_SESSION["shelter"]);
+                unset($_SESSION["adm"]);
+                session_unset();
+                session_destroy();
+                header("Location: logout.php?logout");
+            }
         }
         else{
-            header("Location: logout.php");
+            unset($_SESSION["user"]);
+            unset($_SESSION["shelter"]);
+            unset($_SESSION["adm"]);
+            session_unset();
+            session_destroy();
+            // header("Location: logout.php?logout");
         }
     }else {
         echo "Oops! Something went wrong!";
