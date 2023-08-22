@@ -1,22 +1,27 @@
 <?php
-
-    session_start();
-
-    if(isset($_SESSION["adm"])){
-        header("Location: dashboard.php");
-    }
-
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
-        header("Location: login.php");
-    }
+    require_once "footer.php";
+    require_once "navbar.php";
+    $animalDisplay = $age = $operator = $location = $species = $speciesOptions = "";
+    
 
     require_once "db_connect.php";
+    $name = "";
+    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+        $name = "guest";
+    }
+    else{
+        if(isset($_SESSION["user"])){
+            $sql = "SELECT * FROM users WHERE id = {$_SESSION["user"]}";
+        }
+        if(isset($_SESSION["adm"])){
+            $sql = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
+        }
+    
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $name = $row["first_name"];
+    }
 
-    $sql = "SELECT * FROM users WHERE id = {$_SESSION["user"]}";
-
-    $result = mysqli_query($connect, $sql);
-
-    $row = mysqli_fetch_assoc($result);
 
     $sqlAnimals = "SELECT * FROM animals";
     $resultAnimals = mysqli_query($connect, $sqlAnimals);
@@ -63,6 +68,27 @@
         </div>";
     // ------------------------PET OF THE WEEK END-------------------------------------
 
+    // fetch all animal breeds from the table, dont repeat same species twice
+    $checkerArray = [];
+    $sqlX = "SELECT * FROM `animals`";
+    $result = mysqli_query($connect, $sqlX);
+    if(mysqli_num_rows($result) > 0){
+        while($rowAnimal = mysqli_fetch_assoc($result)){
+            // If an animal species from $rowAnimal["breed"] already exists in the array, don't print
+            // an extra option, then push it into the array
+            if (in_array($rowAnimal["breed"], $checkerArray, TRUE)) {
+                array_push($checkerArray, $rowAnimal["breed"]);
+            }
+            // If an animal species from $row["breed" doesn't exist in the array yet, print an 
+            // extra option line. Then push it into the array. This way you avoid duplicates like
+            // printing an "Option dog" for every single dog in the table
+            else {
+                array_push($checkerArray, $rowAnimal["breed"]);
+                $speciesOptions .= 
+                "<option value='{$rowAnimal["breed"]}'>{$rowAnimal["breed"]}</option>";
+            }
+        }
+    }
     if(mysqli_num_rows($resultAnimals) > 0){
         while($rowAnimal = mysqli_fetch_assoc($resultAnimals)){
             $adoptBtn = "";
@@ -71,63 +97,135 @@
             } else {
                 $adoptBtn = "<button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='adopt.php?x={$rowAnimal["id"]}'>Take me home </a> </button>";
             }
-            
-            $layout .= "<div>
-            <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
-                <div class='card-body '>
-                <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
-                <hr class='TitleHR'>
-                <p class='card-text ps-3 mt-4'><b>Age:</b> <br> {$rowAnimal["age"]} Years</p>
-                <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$rowAnimal["size"]} cm</p>
+            if(isset($_SESSION["adm"])){
+                $bttn ="
+                <div class='buttons text-center'> 
+                            <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                            <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                            <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                </div>";
+            }
+            if(isset($_SESSION["user"])){
+                $bttn ="
                 <div class='buttons text-center'> 
                     <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
                     {$adoptBtn}
-                </div>
-                </div>
+                </div>";
+            }
+            if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+                $bttn ="
+                <div class='buttons text-center'> 
+                    <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                    <button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='login.php'>Take me home </a> </button>
+                </div>";
+            }
+            $animalDisplay .= "<div>
+            <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
+                <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                <div class='card-body '>
+                    <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
+                    <hr class='TitleHR'>
+                    <p class='card-text ps-3 mt-4'><b>Age:</b> <br> {$rowAnimal["age"]} Years</p>
+                    <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$rowAnimal["size"]} cm</p>
+                    {$bttn}
+                    </div>
                 </div>
           </div>";
         }
     }else {
-        $layout.= "No results found!";
+        $animalDisplay.= "No results found!";
     }
+    // Combine any number of criteria :D
+    if(isset($_POST["join-press"])){
+        $animalDisplay = "";
+        $sql = "SELECT * FROM animals WHERE ";
+        $show = false;
 
-    // Get Options to select from for Breeds
-    $speciesOptions = "";
-    $checkerArray = [];
-    $sqlBreed = "SELECT * FROM `animals`";
-    $resultBreed = mysqli_query($connect, $sqlBreed);
-    if(mysqli_num_rows($resultBreed) > 0){
-        while($rowBreed = mysqli_fetch_assoc($resultBreed)){
-            if (in_array($rowBreed["breed"], $checkerArray, TRUE)) {
-                array_push($checkerArray, $rowBreed["breed"]);
-            } else {
-                array_push($checkerArray, $rowBreed["breed"]);
-                $speciesOptions .= 
-                "<option value='{$rowBreed["breed"]}'>{$rowBreed["breed"]}</option>";
-            }
-        }
-    }
-    // Find by Age
-    if(isset($_POST["age-press"])){
         $age = ($_POST["age"]);
         $operator = ($_POST["operator"]);
-    
-        header("Location: petage.php?age={$age}&&operator={$operator}");
-    }
-    
-    // Find by Location (PLZ)
-    if(isset($_POST["location-press"])){
-        $location = ($_POST["location$location"]);
-    
-        header("Location: petlocation.php?location={$location}");
-    }
-    
-    // Find by Species
-    if(isset($_POST["species-press"])){
+        $location = ($_POST["location"]);
+        $location = "%".$location."%";
         $species = ($_POST["species"]);
-    
-        header("Location: petspecies.php?species={$species}");
+
+
+        
+        if($age != "" && $operator != ""){
+            $sql .= "age $operator $age";
+            $show = true;
+        }
+
+
+        if($location != "" && $show == true) {
+            $sql .= " AND address LIKE '$location'";
+        }
+        if($location != "" && $show == false){
+            $sql .= "address LIKE '$location'";
+            $show = true;
+        }
+
+        if($species != "" && $show == true) {
+            $sql .= " AND breed = '$species'";
+        }
+        if($species != "" && $show == false){
+            $sql .= "breed = '$species'";
+            $show = true;
+        }
+
+        if ($sql == "SELECT * FROM animals WHERE ") {
+            echo "DO SOMETHING";
+        }
+        
+        $result = mysqli_query($connect, $sql);
+
+        // for debugging
+        // echo $sql;
+
+        if(mysqli_num_rows($result) > 0){
+            while($rowAnimal = mysqli_fetch_assoc($result)){
+                $adoptBtn = "";
+                if($rowAnimal["status"] == 0 || $rowAnimal["status"] == 2){
+                    $adoptBtn = "<button href='adopt.php?x={$rowAnimal["id"]}' class='btn text-white' disabled id='upBtn'>Take me home</button>";
+                } else {
+                    $adoptBtn = "<button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='adopt.php?x={$rowAnimal["id"]}'>Take me home </a> </button>";
+                }
+                if(isset($_SESSION["adm"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                                <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                                <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                                <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                    </div>";
+                }
+                if(isset($_SESSION["user"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                        <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                        {$adoptBtn}
+                    </div>";
+                }
+                if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                        <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                        <button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='login.php'>Take me home </a> </button>
+                    </div>";
+                }
+                $animalDisplay .= "<div>
+                <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <div class='card-body '>
+                    <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
+                    <hr class='TitleHR'>
+                    <p class='card-text ps-3 mt-4'><b>Age:</b> <br> {$rowAnimal["age"]} Years</p>
+                    <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$rowAnimal["size"]} cm</p>
+                    {$bttn}
+                    </div>
+                    </div>
+              </div>";
+            }
+        }else {
+            $animalDisplay.= "No results found!";
+        }
     }
 ?>
 
@@ -136,49 +234,19 @@
 <head>
     <meta charset="UTF-8">
     <meta  name="viewport"  content="width=device-width, initial-scale=1.0" >
-   <title>Welcome <?= $row["first_name"] ?></title>
+   <title>Welcome <?= $name ?></title>
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"  rel= "stylesheet" integrity ="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"  crossorigin= "anonymous">
    <link rel="Stylesheet" href="../css/home.css">
 
 </head>
 <body>
-   <nav class="navbar navbar-expand-lg bg-body-tertiary" >
-        <div class="container-fluid">
-            <a class="navbar-brand" href="home.php">
-                <img src="../images/logo.png" alt="logo" style="width: 5vw;">
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 navText" >
-                <li class="nav-item ms-2 me-3">
-                    <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="home.php">Pets</a>
-                </li>-->
-                <li class="nav-item  me-3"> 
-                    <a class="nav-link" href="senior.php">Our Seniors</a>
-                </li>
-                <li class="nav-item  me-3"> 
-                    <a class="nav-link" href="resourceLibrary.php">Resource Library</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php?logout">Logout</a >
-                </li>
-            </ul>
-            <a class="navbar-brand" href="update.php?id=<?=$row["id"]?>">
-              <span class="text-black-50 fs-6"><?= $row["email"] ?></span>
-            </a>
-            <a class="navbar-brand" href="update.php?id=<?=$row["id"]?>">
-                <img src="../images/<?= $row["picture"] ?>" class="object-fit-contain" alt="user pic" width="70" height="70">
-            </a>
-        </div>
-    </nav>
-
+    <?=$nav ?>
     <div class="headerImage mb-5">
         <p id="hero">PAWFECT <br> - MATCH -</p>
     </div>
 
     <div class="text-center">
-        <h2 class="text-center mt-5" id="welcome">Welcome <?= $row["first_name"]?>!</h2>
+        <h2 class="text-center mt-5" id="welcome">Welcome <?= $name ?>!</h2>
         <hr class="MLLine" style="width:20vw;">
     </div>
 
@@ -209,17 +277,16 @@
                     <input type="text" class="form-control mt-2" name="age"><br>
                         <label for="operator" class="text-light">Operator: </label>
                         <select id="operator" class="form-select mt-2" name="operator">
+                            <option value="">Select an operator</option>
                             <option value="=">Equals</option>
                             <option value=">">MoreThan</option>
                             <option value="<">LessThan</option>
                         </select>
-                    <button name="age-press" class="btn btn-secondary mt-3" type="submit">FindByAge</button>
-                </form>
-                <hr>
-                <!-- Form to find by Location (PLZ) -->
-                <form method="post" enctype="multipart/form-data">
+                    <hr>
+                    <!-- Form to find by Location (PLZ) -->
                     <label for="location" class="text-light">District: </label>
                     <select id="location" class="form-select mt-2" name="location">
+                        <option value="">Select a Location</option>
                         <option value="1010">1010 Innere Stadt</option>
                         <option value="1020">1020 Leopoldstadt</option>
                         <option value="1030">1030 Landstraße</option>
@@ -244,41 +311,22 @@
                         <option value="1220">1220 Donaustadt</option>
                         <option value="1230">1230 Liesing</option>
                     </select>
-                    <button name="location-press" class="btn btn-secondary mt-3" type="submit">FindByLocation</button>
-                </form>
-                <hr>
-                <!-- Form to find by Species -->
-                <form method="post" enctype="multipart/form-data">
+                    <hr>
+                    <!-- Form to find by Species -->
                     <label for="species" class="text-light">Species: </label>
                     <select id="species" class="form-select mt-2" name="species">
+                        <option value="">select species</option>
                         <?= $speciesOptions ?>
                     </select>
-                    <button name="species-press" class="btn btn-secondary mt-3" type="submit">FindBySpecies</button>
+                    <button name="join-press" class="btn btn-secondary mt-3" type="submit">FindByCriteria</button>
                 </form>
             </div>
         </div>
         <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
-            <?= $layout ?>
+            <?= $animalDisplay ?>
         </div>
     </div>
-    <footer class="mt-5">
-        <div class="card text-center" id="foBg">
-            <div class="card-header p-3">
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/Facebook.png" width="40%" class="m-1"></a>
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/twitter.png" width="90%" class="m-1"></a>
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/instagram.png" width="75%"  class="m-1"></a>
-                <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/google.png" width="75%"  class="m-1"></a>
-            </div>
-            <span class="card-body input-group input-group-sm  mx-auto p-3" style="width: 40%;" >
-                <span class="input-group-text bg-black border-black text-white">Sign up for our newsletter</span>
-                <input type="text" name="email" autocomplete="email" class="form-control bg-black border-black" placeholder="example@gmail.com">
-                <button class=" btn rounded-end bg-black text-white" type="button" id="button-addon1"> Subscripe</button>
-            </span>
-            <div class="card-footer text-body-secondary p-1">
-                &copy; Stefanie Sarközi
-            </div>
-        </div>
-    </footer>
+    <?=$footer ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>

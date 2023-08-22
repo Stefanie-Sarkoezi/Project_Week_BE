@@ -17,7 +17,8 @@
     $result = mysqli_query($connect, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    $sqlUsers = "SELECT * FROM users";
+    
+    $sqlUsers = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
     $resultUsers = mysqli_query($connect, $sqlUsers);
     $rowUser = mysqli_fetch_assoc($resultUsers);
 

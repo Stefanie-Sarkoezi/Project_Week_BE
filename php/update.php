@@ -13,6 +13,9 @@
 
    if( isset($_SESSION["adm"])){
        $backBtn = "dashboard.php";
+       $sqlUsers = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
+       $resultUsers = mysqli_query($connect, $sqlUsers);
+       $row = mysqli_fetch_assoc($resultUsers);
    }
 
    if (isset($_POST["update"])){
@@ -52,8 +55,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" >
         <title>Edit profile </title>
-        <link rel="Stylesheet" href="../css/update.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="Stylesheet" href="../css/update.css">
     </head>
     <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" >
@@ -90,7 +93,7 @@
         <div class="container mt-5 mb-5">
             <div class="text-center mb-5">
                 <h1  id="welcome">Edit profile: </h1>
-                <hr class="MLLine" id="upLine" style="width:20vw;">
+                <hr class="MLLine" style="width:20vw;">
             </div>
             <form method="post" autocomplete="off" enctype="multipart/form-data">
                 <div class="mb-4 mt-5" >
