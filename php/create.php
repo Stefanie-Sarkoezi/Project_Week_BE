@@ -37,9 +37,6 @@
     $resultUsers = mysqli_query($connect, $sqlUsers);
     $rowUser = mysqli_fetch_assoc($resultUsers);
 
-
-
-
     if(isset($_POST["create"])){
         $sql ="";
         $name = $_POST["name"];

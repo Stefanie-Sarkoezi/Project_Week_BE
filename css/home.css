@@ -106,11 +106,26 @@ body{
     padding: 0px;
     margin: 0px;
 }
-/*My Reguest*/
 .myRequest{
     border-radius: 1rem;
     font-size: larger;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.sticky {
+    margin-top: auto;
+}
+
+/* .arrow {
+    justify-self: end;
+} */
+
 
 @media only screen and (max-width: 1200px) {
     .potwImg{
@@ -119,8 +134,3 @@ body{
         width: 50%;
     }
 }
-
-
-
-
-
