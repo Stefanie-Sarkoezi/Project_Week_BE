@@ -92,12 +92,16 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $nicePet = "
-    <div class='npotw text-center d-flex flex-row gap-5 flex-wrap justify-content-start align-items-center m-4' style='width: 50vw;'>
-        <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded potwImg' alt='...' style='width: 50%;'>
-        <div>
-            <b>{$rowAnimal["name"]}</b>
-            <p>{$rowNice["description"]}  
-        </div> 
+    <div class='npotw text-center d-flex flex-row flex-wrap justify-content-start align-items-center'>
+        <div class='row row-cols-xl-2 row-cols-md-1'>
+            <div class='potwImg'>
+                <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
+            </div>
+            <div class='potwImg'>
+                <b>{$rowAnimal["name"]}</b>
+                <p>{$rowNice["description"]}  
+            </div> 
+        </div>
     </div>";
 
     $sqlPow = "SELECT * FROM pet_of_week WHERE id = 2";
@@ -107,12 +111,16 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $naughtyPet = "
-    <div class='npotw text-center d-flex flex-row gap-5 flex-wrap justify-content-start align-items-center' style='width: 50vw;'>
-        <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded potwImg' alt='...' style='width: 50%;'>
-        <div>
-            <b>{$rowAnimal["name"]}</b>
-            <p>{$rowNice["description"]}  
-        </div> 
+    <div class='npotw text-center d-flex flex-row flex-wrap justify-content-start align-items-center'>
+        <div class='row row-cols-xl-2 row-cols-md-1'>
+            <div class='potwImg'>
+                <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
+            </div>
+            <div class='potwImg'>
+                <b>{$rowAnimal["name"]}</b>
+                <p>{$rowNice["description"]}  
+            </div> 
+        </div>
     </div>";
     // ------------------------PET OF THE WEEK END-------------------------------------
 
@@ -176,7 +184,7 @@
 
     <div class="container">
         <hr>
-        <div class="petOfTheWeek row row-cols-xl-2">
+        <div class="petOfTheWeek row row-cols-xl-2 row-cols-md-1">
             <div class="npotw nicePet text-center bg-light p-4">
                 <h2 class="npotw">NICE PET OF THE WEEK</h2>
                 <?=$nicePet?>

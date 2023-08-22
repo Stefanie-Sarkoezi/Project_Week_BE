@@ -46,19 +46,18 @@ if(mysqli_num_rows($result) > 0){
                 <a href='delete.php?x={$row["id"]}' class='btn btn-dark'>Delete</a>
             </div>";
         }
-        $animalDisplay .= 
-        "<div>
-            <div class='card' style='width: 18rem;'>
-                <img src='../images/{$row["picture"]}' class='card-img-top object-fit-cover' alt='...' style='height: 30vh;'>
-                <div class='card-body'>
-                    <h4 class='card-title mb-4 text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$row["name"]}</h4>
-                    <hr class='TitleHR'>
-                    <p class='card-text mt-5'><b>Age:</b> <br> {$row["age"]}</p>
-                    <p class='card-text mb-5'><b>Size:</b><br> {$row["size"]}</p>
-                    {$bttns}
-                </div>
+        $animalDisplay .= "<div>
+        <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
+            <img src='../images/{$row["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+            <div class='card-body '>
+            <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$row["name"]}</h3>
+            <hr class='TitleHR'>
+            <p class='card-text ps-3 mt-4'><b>Age:</b> <br> {$row["age"]} Years</p>
+            <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$row["size"]} cm</p>
+            {$bttns}
             </div>
-        </div>";
+            </div>
+      </div>";
     }
 }else{
     $animalDisplay .= "<p>No results found.</p>";
