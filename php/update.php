@@ -90,7 +90,7 @@
         <div class="container mt-5 mb-5">
             <div class="text-center mb-5">
                 <h1  id="welcome">Edit profile: </h1>
-                <hr class="MLLine" id="upLine" style="width:20vw;">
+                <hr class="MLLine" style="width:20vw;">
             </div>
             <form method="post" autocomplete="off" enctype="multipart/form-data">
                 <div class="mb-4 mt-5" >
