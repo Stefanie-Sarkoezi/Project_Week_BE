@@ -1,5 +1,5 @@
 <?php
-$footer ='<footer class="mt-5">
+$footer ='<footer class="mt-5 sticky">
         <div class="card text-center" id="foBg">
             <div class="card-header p-3">
                 <a class="btn btn-dark p-1 m-1" style="width: 3%;" href="#" role="button"><img src="../images/Facebook.png" width="40%" class="m-1"></a>
