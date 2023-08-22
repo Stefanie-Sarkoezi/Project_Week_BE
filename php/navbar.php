@@ -2,13 +2,28 @@
     session_start();
     require_once "db_connect.php";
     $dashboard="";
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+    $log="
+        <li class='nav-item'>
+            <a class='nav-link' href='logout.php?logout'>Logout</a >
+        </li>";
+    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])&& !isset($_SESSION["shelter"])){
         $userAcc = "
         <a class='navbar-brand' href='login.php'>
         <span class='text-black-50 fs-6'>Login</span>
         </a>";
+        $log="";
     }
     else{
+        if(isset($_SESSION["shelter"])){
+            $sqlNav = "SELECT * FROM users WHERE id = {$_SESSION["shelter"]}";
+            $dashboard="
+                <li class='nav-item me-3'>
+                    <a class='nav-link' aria-current='page' href='agency.php'>Dashboard</a>
+                </li>
+                <li class='nav-item me-3'>
+                    <a class='nav-link' aria-current='page' href='create.php'>Create</a>
+                </li>";
+        }
         if(isset($_SESSION["user"])){
             $sqlNav = "SELECT * FROM users WHERE id = {$_SESSION["user"]}";
         }
@@ -54,9 +69,7 @@
                 <a class='nav-link' href='resourceLibrary.php'>Resource Library</a>
             </li>
             {$dashboard}
-            <li class='nav-item'>
-                <a class='nav-link' href='logout.php?logout'>Logout</a >
-            </li>
+            {$log}
         </ul>
         {$userAcc}
     </div>

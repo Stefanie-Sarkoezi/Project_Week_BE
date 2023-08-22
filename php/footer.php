@@ -13,7 +13,7 @@ $footer ='<footer class="mt-5">
                 <button class=" btn rounded-end bg-black text-white" type="button" id="button-addon1"> Subscribe</button>
             </span>
             <div class="card-footer text-body-secondary p-1">
-                &copy; Stefanie Sarközi
+                &copy; Stefanie Sarközi, Marvin van Dyck, Lukas Lonauer, Michele Laneve
             </div>
         </div>
     </footer>';

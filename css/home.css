@@ -26,9 +26,9 @@ body{
     background-image: url("../images/hero.png");
     width: 100%;
     min-height: 35vh;
-    background-size: auto;
+    background-size: cover;
     background-repeat: no-repeat;
-   
+    background-position: center;
     position: relative;
     display: flex;
   }
@@ -94,6 +94,17 @@ body{
 }
 #upBtn {
     background-color: #44c4bd;  
+}
+.mybtn{
+    width: 150px;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+}
+.myForm{
+    width: 150px;
+    padding: 0px;
+    margin: 0px;
 }
 @media only screen and (max-width: 1200px) {
     .potwImg{

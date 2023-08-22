@@ -11,6 +11,9 @@
         if(isset($_SESSION["user"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["user"]}";
         }
+        if(isset($_SESSION["shelter"])){
+            $sql = "SELECT * FROM users WHERE id = {$_SESSION["shelter"]}";
+        }
         if(isset($_SESSION["adm"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
         }

@@ -4,12 +4,15 @@
 
     require_once "db_connect.php";
     $name = "";
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
         $name = "guest";
     }
     else{
         if(isset($_SESSION["user"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["user"]}";
+        }
+        if(isset($_SESSION["shelter"])){
+            $sql = "SELECT * FROM users WHERE id = {$_SESSION["shelter"]}";
         }
         if(isset($_SESSION["adm"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
@@ -49,7 +52,24 @@
                         {$adoptBtn}
                     </div>";
                 }
-                if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"])){
+                if(isset($_SESSION["shelter"])){
+                    if($rowAnimal["agency_id_fk"] == $row["id"]){
+                        $bttn ="
+                        <div class='buttons text-center'> 
+                                    <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                                    <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                                    <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                        </div>";
+                    }
+                    else{
+                        $bttn ="
+                        <div class='buttons text-center'> 
+                            <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                            {$adoptBtn}
+                        </div>";
+                    }
+                }
+                if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
                     $bttn ="
                     <div class='buttons text-center'> 
                         <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
@@ -104,6 +124,7 @@
             <?= $layout ?>
         </div>
     </div>
+
     <?=$footer ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

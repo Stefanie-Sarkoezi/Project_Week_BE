@@ -189,10 +189,14 @@
                     <input type="password" class="form-control" id="password" name="password">
                     <span class="text-danger"><?= $passError ?></span>
                 </div>
-                <button name="sign-up" type="submit" class="btn mb-5 text-white" id="upBtn">Create account</button>
+                <button name="sign-up" type="submit" class="btn text-white me-3" id="upBtn">Create account</button>
              
-                <span class="ms-3 mb-5 ">You already have an account? <a href="login.php">Sign in here</a></span>
+                <span class="ms-3">You already have an account? <a href="login.php">Sign in here</a></span>
             </form>
+            <div class="mb-4 mt-5">
+                <p><b>You are an animal shelter and interested in working with us?<br>
+                Send us an email at pawfect.registration@gmail.com</b></p>
+            </div>
         </div>
 
         <footer class="mt-5">
