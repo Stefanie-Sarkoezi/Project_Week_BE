@@ -47,6 +47,8 @@
     <meta  name="viewport"  content="width=device-width, initial-scale=1.0" >
    <title>Notifications</title>
    <link rel="Stylesheet" href="../css/home.css">
+   <link rel="Stylesheet" href="../css/lukas.css">
+   
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"  rel= "stylesheet" integrity ="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"  crossorigin= "anonymous">
 
 </head>
@@ -64,7 +66,9 @@
         <hr class="MLLine" style="width:20vw;">
     </div>
 
-    <div class="container">
+    <!-- Added Style by Lukas -->
+    <!-- To avoid the floating container I added a min height to the container. That should prevent this behavior. -->
+    <div class="container" id="floatfooter">
         <table class="table table-striped">
             <thead>
                 <tr>

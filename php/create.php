@@ -60,7 +60,7 @@
             echo "<div class='alert alert-success' role='alert'>
             New entry has been created. {$picture[1]}
                 </div>";
-                header("refresh: 3; url = manage.php");
+                header("refresh: 3; url = home.php");
         }else {
             echo "<div class='alert alert-danger' role='alert'>
                 Oops! Something went wrong. {$picture[1]}

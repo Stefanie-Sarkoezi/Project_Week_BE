@@ -1,0 +1,11 @@
+/* On large screens the container is bigger by default so the footer is at the bottom */
+/* At least this fix works on my big monitor */
+/* (technically speaking) it is always on the bottom of the page. 
+Only, when there isn't enough main content to stretch the height of the page till the bottom it appears to be floating. */
+
+@media only screen and (min-width: 2000px) {
+    #floatfooter {
+        min-height: 270px;
+    }
+}
+
