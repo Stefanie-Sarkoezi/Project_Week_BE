@@ -6,7 +6,19 @@
 
     require_once "db_connect.php";
     $name = "";
-    $potwBtn ="<button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+    $potwBtn ="
+    <div class='row row-cols-xl-4 row-cols-md-2 row-cols-s-1 gap-3'>
+        <form method='post' enctype='multipart/form-data' class='myForm'>
+        <button name='allAnimals' class='btn btn-dark mybtn' type='submit'>All Animals</button>
+        </form>
+        <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+        <form method='post' enctype='multipart/form-data' class='myForm'>
+        <button name='availableAnimals' class='btn btn-dark mybtn' type='submit'>Available Animals</button>
+        </form>
+        <form method='post' enctype='multipart/form-data' class='myForm'>
+        <button name='adoptedAnimals' class='btn btn-dark mybtn' type='submit'>Adopted Animals</button>
+        </form>
+    </div>
     ";
     if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
         $name = "guest";
@@ -18,20 +30,32 @@
         if(isset($_SESSION["shelter"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["shelter"]}";
             $potwBtn ="
-            <div class='row row-cols-xl-2 row-cols-s-1 gap-3'>
+            <div class='row row-cols-xl-4 row-cols-md-2 row-cols-s-1 gap-3'>
+            <form method='post' enctype='multipart/form-data' class='myForm'>
+            <button name='findShelterAnimals' class='btn btn-dark mybtn' type='submit'>Own Animals</button>
+            </form>
+            <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
                 <form method='post' enctype='multipart/form-data' class='myForm'>
-                    <button name='findShelterAnimals' class='btn btn-dark mybtn' type='submit'>Own Animals</button>
+                <button name='availableAnimals' class='btn btn-dark mybtn' type='submit'>Available Animals</button>
                 </form>
-                <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+                <form method='post' enctype='multipart/form-data' class='myForm'>
+                <button name='adoptedAnimals' class='btn btn-dark mybtn' type='submit'>Adopted Animals</button>
+                </form>
             </div>
             ";
         }
         if(isset($_SESSION["adm"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
             $potwBtn ="
-            <div class='row row-cols-xl-2 row-cols-s-1 gap-3'>
-                <a class='btn btn-dark mybtn' type='button' href='create_potw.php'>Pet of the Week</a>
-                <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+            <div class='row row-cols-xl-4 row-cols-md-2 row-cols-s-1 gap-3'>
+            <a class='btn btn-dark mybtn' type='button' href='create_potw.php'>Pet of the Week</a>
+            <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+                <form method='post' enctype='multipart/form-data' class='myForm'>
+                <button name='availableAnimals' class='btn btn-dark mybtn' type='submit'>Available Animals</button>
+                </form>
+                <form method='post' enctype='multipart/form-data' class='myForm'>
+                <button name='adoptedAnimals' class='btn btn-dark mybtn' type='submit'>Adopted Animals</button>
+                </form>
             </div>
             ";
         }
@@ -348,11 +372,17 @@
             $animalDisplay.= "No results found!";
         }
         $potwBtn ="
-        <div class='row row-cols-xl-2 row-cols-s-1 gap-3'>
+        <div class='row row-cols-xl-4 row-cols-md-2 row-cols-s-1 gap-3'>
             <form method='post' enctype='multipart/form-data' class='myForm'>
             <button name='allAnimals' class='btn btn-dark mybtn' type='submit'>All Animals</button>
             </form>
             <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+            <form method='post' enctype='multipart/form-data' class='myForm'>
+            <button name='availableAnimals' class='btn btn-dark mybtn' type='submit'>Available Animals</button>
+            </form>
+            <form method='post' enctype='multipart/form-data' class='myForm'>
+            <button name='adoptedAnimals' class='btn btn-dark mybtn' type='submit'>Adopted Animals</button>
+            </form>
         </div>
         ";
     }
@@ -366,6 +396,150 @@
 
         if(mysqli_num_rows($result) > 0){
             while($rowAnimal = mysqli_fetch_assoc($result)){
+                $adoptBtn = "";
+                if($rowAnimal["status"] == 0 || $rowAnimal["status"] == 2){
+                    $adoptBtn = "<button href='adopt.php?x={$rowAnimal["id"]}' class='btn text-white' disabled id='upBtn'>Take me home</button>";
+                } else {
+                    $adoptBtn = "<button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='adopt.php?x={$rowAnimal["id"]}'>Take me home </a> </button>";
+                }
+                if(isset($_SESSION["adm"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                                <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                                <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                                <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                    </div>";
+                }
+                if(isset($_SESSION["user"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                        <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                        {$adoptBtn}
+                    </div>";
+                }
+                if(isset($_SESSION["shelter"])){
+                    if($rowAnimal["agency_id_fk"] == $row["id"]){
+                        $bttn ="
+                        <div class='buttons text-center'> 
+                                    <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                                    <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                                    <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                        </div>";
+                    }
+                    else{
+                        $bttn ="
+                        <div class='buttons text-center'> 
+                            <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                            {$adoptBtn}
+                        </div>";
+                    }
+                }
+                if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                        <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                        <button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='login.php'>Take me home </a> </button>
+                    </div>";
+                }
+                $animalDisplay .= "<div>
+                <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <div class='card-body '>
+                    <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
+                    <hr class='TitleHR'>
+                    <p class='card-text ps-3 mt-4'><b>Age:</b> <br> {$rowAnimal["age"]} Years</p>
+                    <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$rowAnimal["size"]} cm</p>
+                    {$bttn}
+                    </div>
+                    </div>
+              </div>";
+            }
+        }else {
+            $animalDisplay.= "No results found!";
+        }
+    }
+    if(isset($_POST["availableAnimals"])){
+        $animalDisplay = "";
+        $sql = "SELECT * FROM animals WHERE status = '1'";
+        $result = mysqli_query($connect, $sql);
+
+        // for debugging
+        // echo $sql;
+
+        if(mysqli_num_rows($result) > 0){
+            while($rowAnimal = mysqli_fetch_assoc($result)){
+                $adoptBtn = "";
+                if($rowAnimal["status"] == 0 || $rowAnimal["status"] == 2){
+                    $adoptBtn = "<button href='adopt.php?x={$rowAnimal["id"]}' class='btn text-white' disabled id='upBtn'>Take me home</button>";
+                } else {
+                    $adoptBtn = "<button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='adopt.php?x={$rowAnimal["id"]}'>Take me home </a> </button>";
+                }
+                if(isset($_SESSION["adm"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                                <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                                <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                                <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                    </div>";
+                }
+                if(isset($_SESSION["user"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                        <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                        {$adoptBtn}
+                    </div>";
+                }
+                if(isset($_SESSION["shelter"])){
+                    if($rowAnimal["agency_id_fk"] == $row["id"]){
+                        $bttn ="
+                        <div class='buttons text-center'> 
+                                    <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                                    <a href='edit.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Edit</a>
+                                    <a href='delete.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Delete</a>
+                        </div>";
+                    }
+                    else{
+                        $bttn ="
+                        <div class='buttons text-center'> 
+                            <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                            {$adoptBtn}
+                        </div>";
+                    }
+                }
+                if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
+                    $bttn ="
+                    <div class='buttons text-center'> 
+                        <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                        <button  class='btn text-white' id='upBtn'> <a class='text-decoration-none text-white' href='login.php'>Take me home </a> </button>
+                    </div>";
+                }
+                $animalDisplay .= "<div>
+                <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <div class='card-body '>
+                    <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
+                    <hr class='TitleHR'>
+                    <p class='card-text ps-3 mt-4'><b>Age:</b> <br> {$rowAnimal["age"]} Years</p>
+                    <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$rowAnimal["size"]} cm</p>
+                    {$bttn}
+                    </div>
+                    </div>
+              </div>";
+            }
+        }else {
+            $animalDisplay.= "No results found!";
+        }
+    }
+    if(isset($_POST["adoptedAnimals"])){
+        $animalDisplay = "";
+        $sqlAdA = "SELECT * FROM animals WHERE status = '0'";
+        $resultAdA = mysqli_query($connect, $sqlAdA);
+
+        // for debugging
+        // echo $sql;
+
+        if(mysqli_num_rows($resultAdA) > 0){
+            while($rowAnimal = mysqli_fetch_assoc($resultAdA)){
                 $adoptBtn = "";
                 if($rowAnimal["status"] == 0 || $rowAnimal["status"] == 2){
                     $adoptBtn = "<button href='adopt.php?x={$rowAnimal["id"]}' class='btn text-white' disabled id='upBtn'>Take me home</button>";
@@ -516,7 +690,7 @@
                     <!-- Form to find by Species -->
                     <label for="species" class="text-light">Species: </label>
                     <select id="species" class="form-select mt-2" name="species">
-                        <option value="">select species</option>
+                        <option value="">Select Species</option>
                         <?= $speciesOptions ?>
                     </select>
                     <button name="join-press" class="btn btn-secondary mt-3" type="submit">FindByCriteria</button>

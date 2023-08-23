@@ -9,6 +9,35 @@
     if(!isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
         header("Location: home.php");
     }
+    $agencyForm = "";
+    $agencyForm2 = "";
+    $agencyOptions = "";
+    if(isset($_SESSION["shelter"])){
+        $sqlUsers = "SELECT * FROM users WHERE id = {$_SESSION["shelter"]}";
+    }
+    if(isset($_SESSION["adm"])){
+        $sqlUsers = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
+        $sqlAcc = "SELECT * FROM users";
+        $resultAcc = mysqli_query($connect, $sqlAcc);
+        if(mysqli_num_rows($resultAcc) > 0){
+            while($rowAcc = mysqli_fetch_assoc($resultAcc)){
+                if ($rowAcc["status"] == "shelter") {
+                    $agencyOptions .= 
+                    "<option value='{$rowAcc['id']}'>{$rowAcc['first_name']} {$rowAcc['last_name']}</option>";
+                }
+            }
+        }
+        $agencyForm="
+        <div class='mb-4'>
+            <label for='agencyID' class='form-label'>Agency:</label>
+                <select id='agencyID' class='form-select mt-2' name='agencyID'>
+                    <option value=''>select agency</option>";
+        $agencyForm2 = "
+                    </select>
+            </div>";
+    }
+    $resultUsers = mysqli_query($connect, $sqlUsers);
+    $rowUser = mysqli_fetch_assoc($resultUsers);
 
     $id = $_GET["x"];
     $sql = "SELECT * FROM animals WHERE id = $id";
@@ -25,14 +54,19 @@
         $breed = $_POST["breed"];
         $status = $_POST["status"];
         $picture = fileUpload($_FILES["picture"], "animal");
-
+        if(isset($_SESSION["adm"])){
+            $agencyID = $_POST["agencyID"];
+        }
+        else{
+            $agencyID = $rowUser["id"];
+        }
         if($_FILES["picture"]["error"] == 0){
             if($row["picture"] != "pet-avatar.png"){
                 unlink("../images/$row[picture]");
             }
-            $sql = "UPDATE `animals` SET `name`='$name', `address`='$address', `description`='$description', `size`='$size', `age`='$age', `vaccinated`='$vaccinated', `breed`='$breed', `status`='$status',`picture`='{$picture[0]}' WHERE id = $id";
+            $sql = "UPDATE `animals` SET `name`='$name', `address`='$address', `description`='$description', `size`='$size', `age`='$age', `vaccinated`='$vaccinated', `breed`='$breed', `status`='$status',`picture`='{$picture[0]}', `agency_id_fk`= '$agencyID' WHERE id = $id";
         }else {
-            $sql = "UPDATE `animals` SET `name` = '$name', `address`= '$address', `description`='$description', `size`='$size', `age`='$age', `vaccinated`='$vaccinated', `breed`='$breed', `status`='$status'  WHERE id = $id";
+            $sql = "UPDATE `animals` SET `name` = '$name', `address`= '$address', `description`='$description', `size`='$size', `age`='$age', `vaccinated`='$vaccinated', `breed`='$breed', `status`='$status', `agency_id_fk`= '$agencyID'  WHERE id = $id";
         }
         
         if(mysqli_query($connect, $sql)){
@@ -88,22 +122,37 @@
             </div>
             <div class="mb-4">
                 <label for="vaccinated" class="form-label">Vaccinated:</label>
-                <input type="text" class="form-control"  id="vaccinated"  aria-describedby="vaccinated"  name="vaccinated" value="<?= $row["vaccinated"] ?>">
+                <select class="form-select form-select mb-3" aria-label="vaccinated" name="vaccinated" id="vaccinated" >
+                    <option selected value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select> 
             </div>
             <div class="mb-4">
                 <label for="breed" class="form-label">Breed:</label>
-                <input type="text" class="form-control"  id="breed"  aria-describedby="breed"  name="breed" value="<?= $row["breed"] ?>">
+                <select class="form-select form-select mb-3" aria-label="breed" name="breed" id="breed" >
+                    <option selected value="Cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Leopard Gecko">Leopard Gecko</option>
+                    <option value="Bunny">Bunny</option>
+                    <option value="Jumping Spider">Jumping Spider</option>
+                </select> 
             </div>
             <div class="mb-4">
                 <label for="status" class="form-label">Status:</label>
-                <input type="number" class="form-control"  id="status"  aria-describedby="status"  name="status" value="<?= $row["status"] ?>">
+                <select class="form-select form-select mb-3" aria-label="status" name="status" id="status" >
+                    <option selected value="1">Available</option>
+                    <option value="0">Adopted</option>
+                </select> 
             </div>
+            <?= $agencyForm ?>
+            <?= $agencyOptions ?>
+            <?= $agencyForm2 ?>
            <div class="mb-4">
                 <label for="picture" class="form-label">Picture:</label>
                 <input type = "file" class="form-control" id="picture" aria-describedby="picture"   name="picture">
             </div>
             <button name="update" type="submit" class="btn text-white mb-5" id="upBtn">Update entry</button>
-            <a href="manage.php" class="btn btn-dark mb-5">Back to Admin</a>
+            <a href="home.php" class="btn btn-dark mb-5">Back to Admin</a>
         </form>
     </div>
     <?= $footer ?>
