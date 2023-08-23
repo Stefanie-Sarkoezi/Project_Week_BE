@@ -67,7 +67,7 @@
             <li class='nav-item  me-3'> 
                 <a class='nav-link' href='senior.php'>Our Seniors</a>
             </li>
-            <li class='nav-item dropdown'>
+            <li class='nav-item dropdown me-3'>
                 <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
                     Info
                 </a>
