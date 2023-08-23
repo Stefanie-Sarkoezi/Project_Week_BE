@@ -44,9 +44,6 @@
         $rowNav = mysqli_fetch_assoc($resultNav);
         $userAcc = "
         <a class='navbar-brand' href='update.php?id={$rowNav["id"]}'>
-        <span class='text-black-50 fs-6'>{$rowNav['email']}</span>
-        </a>
-        <a class='navbar-brand' href='update.php?id={$rowNav["id"]}'>
             <img src='../images/{$rowNav["picture"]}' class='object-fit-contain' alt='user pic' width='70' height='70'>
         </a>";
     }
@@ -67,7 +64,7 @@
             <li class='nav-item  me-3'> 
                 <a class='nav-link' href='senior.php'>Our Seniors</a>
             </li>
-            <li class='nav-item dropdown'>
+            <li class='nav-item dropdown me-3'>
                 <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
                     Info
                 </a>

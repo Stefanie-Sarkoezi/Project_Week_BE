@@ -122,9 +122,13 @@ body {
     margin-top: auto;
 }
 
-/* .arrow {
-    justify-self: end;
-} */
+.faqCard {
+    border-color: #44c4bd;
+}
+.teamImg {
+    max-width: 50vw;
+    max-height: 50vh;
+}
 
 
 @media only screen and (max-width: 1200px) {
