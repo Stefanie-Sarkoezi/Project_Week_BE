@@ -22,7 +22,7 @@
     </div>
 
     <div class="text-center">
-        <h2 class="text-center mt-5" id="welcome">FAQs</h2>
+        <h2 class="text-center mt-5" id="welcome">About us</h2>
         <hr class="MLLine" style="width:20vw;">
     </div>
 

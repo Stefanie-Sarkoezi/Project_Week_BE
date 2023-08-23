@@ -21,10 +21,10 @@
                     <a class='nav-link' aria-current='page' href='agency.php'>Dashboard</a>
                 </li>
                 <li class='nav-item me-3'>
-                    <a class='nav-link' aria-current='page' href='agency.php'>Dashboard</a>
+                    <a class='nav-link' aria-current='page' href='agencyNotifications.php'>Requests</a>
                 </li>
                 <li class='nav-item me-3'>
-                    <a class='nav-link' aria-current='page' href='agencyNotifications.php'>Requests</a>
+                    <a class='nav-link' aria-current='page' href='create.php'>Create</a>
                 </li>";
         }
         if(isset($_SESSION["user"])){
@@ -49,7 +49,6 @@
         <a class='navbar-brand' href='update.php?id={$rowNav["id"]}'>
             <img src='../images/{$rowNav["picture"]}' class='object-fit-contain' alt='user pic' width='70' height='70'>
         </a>";
-
     }
 
     $nav="

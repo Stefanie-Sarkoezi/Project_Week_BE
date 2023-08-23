@@ -13,7 +13,11 @@
     $result = mysqli_query($connect, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    $edit = "UPDATE `animals` SET `status` = '0' WHERE id = {$id}";
+    $sqlA = "SELECT * FROM animals WHERE id = {$row['animal_id_fk']}";
+    $resultA = mysqli_query($connect, $sqlA);
+    $rowA = mysqli_fetch_assoc($resultA);
+    $xy = $rowA['id'];
+    $edit = "UPDATE `animals` SET `status` = '0' WHERE id = $xy";
 
     $delete = "DELETE FROM `pet_adoptions` WHERE id = {$id}";
     if(mysqli_query($connect, $edit) && mysqli_query($connect, $delete)){
