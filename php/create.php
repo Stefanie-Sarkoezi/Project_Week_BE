@@ -133,7 +133,7 @@
                 <input type = "file" class="form-control" id="picture" aria-describedby="picture"   name="picture">
             </div>
             <button name="create" type="submit" class="btn text-white mb-5 mt-4 me-3" id="upBtn">Create Entry</button>
-            <a href="dashboard.php" class="btn btn-dark mb-5 mt-4">Back to Dashboard</a>
+            <a href="home.php" class="btn btn-dark mb-5 mt-4">Back to Home</a>
         </form>
     </div>
 

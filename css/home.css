@@ -80,14 +80,20 @@ body{
     color: #44c4bd;
     opacity: 100%;
 }
-.potwImg{
-    padding: 0px;
-    margin: 0px;
+/* .conImg {
+    
+    
+    box-sizing:border-box;
     width: 50%;
+    height: 50%;
+    
+} */
+.potwImg{
+    padding: 0%;
+    
 }
-.npotw{
-    padding: 0px;
-    margin: 0px;
+.conTxt {
+    width: 30%;
 }
 #upLine {
     margin-left: 35%;
@@ -96,10 +102,10 @@ body{
     background-color: #44c4bd;  
 }
 .mybtn{
-    width: 150px;
-    height: 50px;
-    padding: 0px;
-    margin: 0px;
+    width: auto;
+    height: auto;
+    text-align: center;
+
 }
 .myForm{
     width: 150px;

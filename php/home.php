@@ -47,14 +47,14 @@
         if(isset($_SESSION["adm"])){
             $sql = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
             $potwBtn ="
-            <div class='row row-cols-xl-4 row-cols-md-2 row-cols-s-1 gap-3'>
-            <a class='btn btn-dark mybtn' type='button' href='create_potw.php'>Pet of the Week</a>
-            <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
+            <div class='row row-cols-xl-4 row-cols-md-2 row-cols-s-1 gap-3 mt-5'>
+                <a class='btn btn-dark mybtn px-3 text-nowrap' type='button' href='create_potw.php'>Pet of the Week</a>
+                <button class='btn btn-dark mybtn' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>Filter</button>
                 <form method='post' enctype='multipart/form-data' class='myForm'>
-                <button name='availableAnimals' class='btn btn-dark mybtn' type='submit'>Available Animals</button>
+                    <button name='availableAnimals' class='btn btn-dark mybtn text-nowrap' type='submit'>Available Animals</button>
                 </form>
                 <form method='post' enctype='multipart/form-data' class='myForm'>
-                <button name='adoptedAnimals' class='btn btn-dark mybtn' type='submit'>Adopted Animals</button>
+                    <button name='adoptedAnimals' class='btn btn-dark mybtn text-nowrap ms-3' type='submit'>Adopted Animals</button>
                 </form>
             </div>
             ";
@@ -79,14 +79,14 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $nicePet = "
-        <div class='npotw text-center d-flex flex-row flex-wrap justify-content-start align-items-center'>
-            <div class='row row-cols-xl-2 row-cols-md-1'>
-                <div class='potwImg'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
-                </div>
-                <div class='potwImg'>
-                    <b>{$rowAnimal["name"]}</b>
-                    <p>{$rowNice["description"]}  
+        <div class='text-center my-5'>
+            <div class='d-flex flex-row flex-wrap flex-sm-wrap flex-md-wrap flex-lg-nowrap flex-xl-nowrap flex-xxl-nowrap justify-content-center align-items-center gap-5'>
+                
+                    <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded potwImg shadow' style='width: 50%; height: 50%; object-fit: cover; object-position: center;' alt='...' '>
+               
+                <div class='conTxt'>
+                    <b class='mb-5  card-title'>{$rowAnimal["name"]}</b>
+                    <p class='mt-3'>{$rowNice["description"]}  
                 </div> 
             </div>
         </div>";
@@ -98,14 +98,14 @@
     $resultAnimal = mysqli_query($connect, $sqlAnimal);
     $rowAnimal = mysqli_fetch_assoc($resultAnimal);
     $naughtyPet = "
-        <div class='npotw text-center d-flex flex-row flex-wrap justify-content-start align-items-center'>
-            <div class='row row-cols-xl-2 row-cols-md-1'>
-                <div class='potwImg'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded' alt='...' style='width: 50%;'>
-                </div>
-                <div class='potwImg'>
-                    <b>{$rowAnimal["name"]}</b>
-                    <p>{$rowNice["description"]}  
+        <div class='text-center my-5'>
+            <div class='d-flex flex-row flex-wrap flex-sm-wrap flex-md-wrap flex-lg-nowrap flex-xl-nowrap flex-xxl-nowrap justify-content-center align-items-center gap-5'>
+                
+                    <img src='../images/{$rowAnimal["picture"]}' class='img-fluid img-thumbnail rounded potwImg shadow' style='width: 50%; height: 50%; object-fit: cover; object-position: center;' alt='...' '>
+               
+                <div class='conTxt'>
+                    <b class='mb-5 card-title'>{$rowAnimal["name"]}</b>
+                    <p class='mt-3'>{$rowNice["description"]}  
                 </div> 
             </div>
         </div>";
@@ -181,7 +181,7 @@
             }
             $animalDisplay .= "<div>
             <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='max-height:50%; object-fit:cover;'>
                 <div class='card-body '>
                     <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
                     <hr class='TitleHR'>
@@ -289,7 +289,7 @@
                 }
                 $animalDisplay .= "<div>
                 <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='max-height:50%; object-fit:cover;'>
                     <div class='card-body '>
                     <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
                     <hr class='TitleHR'>
@@ -357,7 +357,7 @@
                 }
                 $animalDisplay .= "<div>
                 <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='max-height:50%; object-fit:cover;'>
                     <div class='card-body '>
                     <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
                     <hr class='TitleHR'>
@@ -443,7 +443,7 @@
                 }
                 $animalDisplay .= "<div>
                 <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='max-height:50%; object-fit:cover;'>
                     <div class='card-body '>
                     <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
                     <hr class='TitleHR'>
@@ -515,7 +515,7 @@
                 }
                 $animalDisplay .= "<div>
                 <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='max-height:50%; object-fit:cover;'>
                     <div class='card-body '>
                     <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
                     <hr class='TitleHR'>
@@ -587,7 +587,7 @@
                 }
                 $animalDisplay .= "<div>
                 <div class='card gap-2 mt-5 mb-5 shadow align-items-center' style='width: 17rem;'>
-                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='width: 100%;'>
+                    <img src='../images/{$rowAnimal["picture"]}' class='card-img-top' alt='...' style='max-height:50%; object-fit:cover;'>
                     <div class='card-body '>
                     <h3 class='card-title text-center d-flex align-items-center justify-content-center' style='height: 8vh;' >{$rowAnimal["name"]}</h3>
                     <hr class='TitleHR'>
@@ -626,18 +626,18 @@
     </div>
 
     <div class="container">
-        <hr>
-        <div class="petOfTheWeek row row-cols-xl-2 row-cols-md-1">
-            <div class="npotw nicePet text-center bg-light p-4">
-                <h2 class="npotw">NICE PET OF THE WEEK</h2>
+        <hr class="mt-5 mb-4">
+        <div class="d-flex flex-row flex-wrap flex-sm-wrap flex-md-wrap flex-lg-nowrap flex-xl-nowrap flex-xxl-nowrap justify-content-center align-items-stretch gap-4">
+            <div class="text-center bg-light rounded shadow flex-grow-1">
+                <h2 class="mb-5 mt-4 card-title">NICE PET OF THE WEEK</h2>
                 <?=$nicePet?>
             </div>
-            <div class="naughtyPet text-center bg-light p-4">
-                <h2 class="npotw">NAUGHTY PET OF THE WEEK</h2>
+            <div class="text-center bg-light rounded shadow flex-grow-1">
+                <h2 class="mb-5 mt-4 card-title">NAUGHTY PET OF THE WEEK</h2>
                 <?=$naughtyPet?>
             </div>
         </div>
-        <hr>
+        <hr class="mb-5 mt-4">
         <?= $potwBtn ?>
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
             <div class="offcanvas-header myFilter">

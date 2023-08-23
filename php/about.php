@@ -28,7 +28,7 @@
 
     <div class="container d-flex flex-row flex-wrap flex-sm-wrap flex-md-wrap flex-lg-nowrap flex-xl-nowrap flex-xxl-nowrap justify-content-evenly gap-5">
         <div>
-            <div class="mt-5 card card-body faqCard p-5">
+            <div class="mt-5 card card-body faqCard p-5 shadow">
                 <div class="mb-3">
                     <p class="card-title"> Welcome to Pawfect: <br> Where Hearts and Homes Unite </p>
                 </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
         <div class="mt-5">
-            <div class="card card-body faqCard">
+            <div class="card card-body faqCard shadow">
                 <img src="../images/team.png" class="rounded teamImg">
             </div>
         </div>
