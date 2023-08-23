@@ -65,7 +65,7 @@
                 <p class='card-text mb-4 ps-3'><b>Size:</b><br> {$rowAnimal["size"]} cm</p>
                 <p class='card-text mb-4 ps-3'><b>Status:</b><br> {$statusText} </p>
                 <div class='buttons text-center'> 
-                    <a href='agencyreview.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
+                    <a href='details.php?x={$rowAnimal["id"]}' class='btn btn-dark'>Details</a>
                 </div>
                 </div>
                 </div>

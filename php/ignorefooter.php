@@ -1,3 +1,0 @@
-<?php
-
-$footer ="hello world";

@@ -22,7 +22,7 @@
 
     $delete = "DELETE FROM `animals` WHERE id = $id";
     if(mysqli_query($connect, $delete)){
-        header("Location: manage.php");
+        header("Location: home.php");
     }else {
         echo "Oops! Something went wrong!";
     }

@@ -3,39 +3,19 @@
     require_once "navbar.php";
 
     require_once "db_connect.php";
-    $name = "";
-    if(!isset($_SESSION["user"]) && !isset($_SESSION["adm"]) && !isset($_SESSION["shelter"])){
-        $name = "guest";
-    }
-    else{
-        if(isset($_SESSION["user"])){
-            $sql = "SELECT * FROM users WHERE id = {$_SESSION["user"]}";
-        }
-        if(isset($_SESSION["shelter"])){
-            $sql = "SELECT * FROM users WHERE id = {$_SESSION["shelter"]}";
-        }
-        if(isset($_SESSION["adm"])){
-            $sql = "SELECT * FROM users WHERE id = {$_SESSION["adm"]}";
-        }
-    
-        $result = mysqli_query($connect, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $name = $row["first_name"];
-    }
 ?>
-
 <!DOCTYPE html>
 <html lang ="en">
 <head>
     <meta charset="UTF-8">
     <meta  name="viewport"  content="width=device-width, initial-scale=1.0" >
-   <title>Welcome <?= $name ?></title>
+   <title>Resource Libary</title>
    <link rel="Stylesheet" href="../css/home.css">
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"  rel= "stylesheet" integrity ="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"  crossorigin= "anonymous">
 
 </head>
 <body>
-    <?=$nav ?>
+   <?= $nav ?>
 
     <div class="headerImage mb-5">
         <p id="hero">PAWFECT <br> - MATCH -</p>
@@ -120,6 +100,8 @@
     </div>
 
     <?=$footer ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -106,17 +106,17 @@
         <form method="POST" enctype="multipart/form-data"> 
            <div class="mb-4 mt-5">
                <label for="livingcondition" class= "form-label">Living Conditions:</label>
-               <textarea type="text" style="height: 10vh;" class="form-control"  id="livingcondition"  aria-describedby="livingcondition"  name="livingcondition"></textarea>
+               <textarea type="text" style="height: 10vh;" class="form-control"  id="livingcondition"  aria-describedby="livingcondition"  name="livingcondition" required></textarea>
                 <span class="text-danger"><?= $livingconditionError ?></span>
             </div>
             <div class="mb-4 mt-5">
                <label for="previousexperience" class= "form-label">Previous Pet Experience:</label>
-               <textarea type="text" style="height: 10vh;" class="form-control"  id="previousexperience"  aria-describedby="previousexperience"  name="previousexperience"></textarea>
+               <textarea type="text" style="height: 10vh;" class="form-control"  id="previousexperience"  aria-describedby="previousexperience"  name="previousexperience" required></textarea>
                 <span class="text-danger"><?= $previousexperienceError ?></span>
             </div>
             <div class="mb-4 mt-5">
                <label for="adoptionreason" class= "form-label">Adoption Reason:</label>
-               <textarea type="text" style="height: 10vh;" class="form-control"  id="adoptionreason"  aria-describedby="adoptionreason"  name="adoptionreason"></textarea>
+               <textarea type="text" style="height: 10vh;" class="form-control"  id="adoptionreason"  aria-describedby="adoptionreason"  name="adoptionreason" required></textarea>
                 <span class="text-danger"><?= $adoptionreasonError ?></span>
             </div>
             <button name="createrequest" type="submit" class="btn text-white mb-5 mt-4 me-3" id="upBtn">Create Request</button>

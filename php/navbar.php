@@ -21,7 +21,10 @@
                     <a class='nav-link' aria-current='page' href='agency.php'>Dashboard</a>
                 </li>
                 <li class='nav-item me-3'>
-                    <a class='nav-link' aria-current='page' href='create.php'>Create</a>
+                    <a class='nav-link' aria-current='page' href='agency.php'>Dashboard</a>
+                </li>
+                <li class='nav-item me-3'>
+                    <a class='nav-link' aria-current='page' href='agencyNotifications.php'>Requests</a>
                 </li>";
         }
         if(isset($_SESSION["user"])){
@@ -65,8 +68,15 @@
             <li class='nav-item  me-3'> 
                 <a class='nav-link' href='senior.php'>Our Seniors</a>
             </li>
-            <li class='nav-item  me-3'> 
-                <a class='nav-link' href='resourceLibrary.php'>Resource Library</a>
+            <li class='nav-item dropdown'>
+                <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                    Info
+                </a>
+                <ul class='dropdown-menu'>
+                    <li><a class='dropdown-item' href='resourceLibrary.php'>Resource Library</a></li>
+                    <li><a class='dropdown-item' href='faq.php'>FAQ</a></li>
+                    <li><a class='dropdown-item' href='about.php'>About us</a></li>
+                </ul>
             </li>
             {$dashboard}
             {$log}
